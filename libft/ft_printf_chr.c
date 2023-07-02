@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_chr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:16:44 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/06/11 17:58:19 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/02 18:31:02 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_printf_width(char c, t_flags *flags, t_list **lst)
 }
 
 void	ft_printf_chr(char c, t_flags *flags, t_list **lst)
-{		
+{
 	if (flags->width > 1)
 		ft_printf_width(c, flags, lst);
 	else

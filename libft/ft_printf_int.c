@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_int.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:32:44 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/06/11 17:58:33 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/02 18:32:10 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_forward_sign(char *number)
 		{
 			number[0] = *sign;
 			*sign = '0';
-		}	
+		}
 	}
 }
 
