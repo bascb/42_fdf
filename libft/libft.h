@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:03:51 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/06/13 17:44:30 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:25:56 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -259,4 +263,7 @@ int		ft_charinset(int c, char *charset);
 /* Recreation of printf by 42 */
 int		ft_printf(const char *format, ...)
 		__attribute__((format(printf, 1, 2)));
+
+/* Get next line of file wtih file descriptor fd */
+char	*get_next_line(int fd);
 #endif

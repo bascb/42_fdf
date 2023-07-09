@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 19:22:06 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/08 19:41:22 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:10:05 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	key_close_window(int keycode, t_vars *vars)
 	if (keycode == ESC_KEY)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
-		exit(0);
+		free(vars->mlx);
 	}
 	return (0);
 }
