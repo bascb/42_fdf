@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 19:22:06 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 15:34:40 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:15:46 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@ int	main(int argc, char **argv)
 {
 	t_params	params;
 	t_point		start;
+	double		angles[2];
 
+	angles[0] = M_PI / 4;
+	angles[1] = 0.03 * M_PI;
 	initialize_params(&params);
 	if (argc != 2)
 		clean_exit(&params, "Usage: ./fdf <filename>", 0);
 	check_file_extension(&params, argv[1]);
 	check_map(&params, argv[1]);
 	get_map(&params, argv[1]);
+	params.map_scale = round(1060 * 0.707 / params.map_cols);
 	start.color = create_trgb(0, 255, 255, 0);
 	start.x = 700;
-	start.y = 3;
+	start.y = 300;
 	plain_map(&params, start, params.map_scale);
-	rotate_2d(&params, start, M_PI / 4, M_PI / 4);
-	iso_proj(&params, start, M_PI / 4, 0.03 * M_PI);
+	rotate_2d(&params, start, M_PI / 4);
+	iso_proj(&params, start, angles);
 	init_window(&params, argv[1]);
 	draw_map(&params);
 	mlx_put_image_to_window(params.mlx, params.win, params.img, 0, 0);

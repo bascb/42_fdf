@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:12:08 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 11:01:13 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 19:00:56 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	check_line(int *col_number, char **points)
 		i++;
 	if (*col_number == 0)
 		*col_number = i;
-	else if (*col_number != i)
-		*col_number = 0;
+	else if (*col_number < i)
+		*col_number = i;
 	free_matrix((void **) points);
 }
 
@@ -76,7 +76,6 @@ void	check_map(t_params *params, char *file_path)
 		clean_exit(params, "Incorrect file format", 0);
 	params->map_lines = lines_number;
 	params->map_cols = col_number;
-	params->map_scale = round(1060 * 0.707 / params->map_cols);
 }
 
 void	get_map(t_params *params, char *file_path)

@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 21:35:38 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 03:26:28 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:12:23 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,124 +16,53 @@ void	draw_point(t_params *params, int x, int y, int color)
 {
 	char	*dst;
 
+	if (x < 0 || x > MAX_WIDTH)
+		return ;
+	if (y < 0 || y > MAX_HEIGHT)
+		return ;
 	dst = params->addr + (y * params->line_length
 			+ x * (params->bits_per_pixel / 8));
 	*(unsigned int *) dst = color;
 }
 
-void	draw_y_bigger(t_params *params, t_point start, t_point end)
+void	draw_point2(int err[2], int d[2], int index[2], int sum[2])
 {
-	int	dx;
-	int	dy;
-	int	xi;
-	int	yi;
-	int	d;
-
-	dx = end.x - start.x;
-	dy = end.y - start.y;
-	xi = start.x;
-	yi = start.y;
-	d = 2 * dx - dy;
-	while (yi <= end.y)
+	err[1] = 2 * err[0];
+	if (err[1] > -d[1]) 
 	{
-		draw_point(params, xi, yi, start.color);
-		if (d > 0)
-		{
-			xi++;
-			d = d - 2 * dy;
-		}
-		d = d + 2 * dx;
-		yi++;
+		err[0] -= d[1];
+		index[0] += sum[0];
 	}
-}
-
-void	draw_x_bigger(t_params *params, t_point start, t_point end)
-{
-	int	dx;
-	int	dy;
-	int	xi;
-	int	yi;
-	int	d;
-
-	dx = end.x - start.x;
-	dy = end.y - start.y;
-	xi = start.x;
-	yi = start.y;
-	d = 2 * dy - dx;
-	while (xi <= end.x)
+	if (err[1] < d[0])
 	{
-		draw_point(params, xi, yi, start.color);
-		if (d > 0)
-		{
-			yi++;
-			d = d - 2 * dx;
-		}
-		d = d + 2 * dy;
-		xi++;
+		err[0] += d[0];
+		index[1] += sum[1];
 	}
 }
 
 void	draw_line(t_params *params, t_point start, t_point end)
 {
-	int	dx;
-	int	dy;
-	int	xi;
-	int	yi;
-	int	err;
-	int	err2;
-	int	sum_x;
-	int	sum_y;
+	int	d[2];
+	int	index[2];
+	int	err[2];
+	int	sum[2];
 
-	dx = abs(end.x - start.x);
-	dy = abs(end.y - start.y);
-	xi = start.x;
-	yi = start.y;
+	d[0] = abs(end.x - start.x);
+	d[1] = abs(end.y - start.y);
+	index[0] = start.x;
+	index[1] = start.y;
+	sum[0] = -1;
+	sum[1] = -1;
 	if (start.x < end.x)
-		sum_x = 1;
-	else
-		sum_x = -1;
+		sum[0] = 1;
 	if (start.y < end.y)
-		sum_y = 1;
-	else
-		sum_y = -1;
-	err = dx - dy;
-	while (xi != end.x || yi != end.y )
+		sum[1] = 1;
+	err[0] = d[0] - d[1];
+	while (index[0] != end.x || index[1] != end.y)
 	{
-		draw_point(params, xi, yi, start.color);
-		err2 = 2 * err;
-		if (err2 > -dy) {
-            err -= dy;
-            xi += sum_x;
-        }
-        if (err2 < dx) {
-            err += dx;
-            yi += sum_y;
-        }
+		draw_point(params, index[0], index[1], start.color);
+		draw_point2(err, d, index, sum);
 	}
-}
-
-/* Using Bresenham's line algorithm */
-void	draw_line2(t_params *params, t_point start, t_point end)
-{
-	int	dx;
-	int	dy;
-
-	dx = end.x - start.x;
-	dy = end.y - start.y;
-	if (dx < 0 || dy < 0) 
-	{
-		if (dy < dx)
-			draw_y_bigger(params, end, start);
-		else
-			draw_x_bigger(params, end, start);
-	}
-	else
-	{
-		if (dy > dx)
-			draw_y_bigger(params, start, end);
-		else
-			draw_x_bigger(params, start, end);
-	}	
 }
 
 void	draw_map(t_params *params)
@@ -158,6 +87,6 @@ void	draw_map(t_params *params)
 		{
 			draw_line(params, params->map_2d[i][j], params->map_2d[i][j + 1]);
 			j++;
-		}	
+		}
 	}
 }

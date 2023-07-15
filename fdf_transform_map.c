@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 21:57:31 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 15:26:10 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:16:27 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,13 @@ void	plain_map(t_params *params, t_point start, int scale)
 	}
 }
 
-void	rotate_2d(t_params *params, t_point start, double alpha, double beta)
+void	rotate_2d(t_params *params, t_point start, double angle)
 {
 	int		i;
 	int		j;
-	double	rx;
-	double	ry;
-	int		nx;
-	int		ny;
-	int		dx;
-	int		dy;
+	double	r[2];
+	int		n[2];
+	int		d[2];
 
 	i = 0;
 	while (i < params->map_lines)
@@ -51,30 +48,26 @@ void	rotate_2d(t_params *params, t_point start, double alpha, double beta)
 		j = 0;
 		while (j < params->map_cols)
 		{
-			dx = params->map_2d[i][j].x - start.x;
-			dy = params->map_2d[i][j].y - start.y;
-			rx = dx * cos(alpha) - dy * sin(alpha);
-			ry = dx * sin(beta) + dy * cos(beta);
-			nx = round(rx) + start.x;
-			ny = round(ry) + start.y;
-			params->map_2d[i][j].x = nx;
-			params->map_2d[i][j].y = ny;
+			d[0] = params->map_2d[i][j].x - start.x;
+			d[1] = params->map_2d[i][j].y - start.y;
+			r[0] = d[0] * cos(angle) - d[1] * sin(angle);
+			r[1] = d[0] * sin(angle) + d[1] * cos(angle);
+			n[0] = round(r[0]) + start.x;
+			n[1] = round(r[1]) + start.y;
+			params->map_2d[i][j].x = n[0];
+			params->map_2d[i][j].y = n[1];
 			j++;
 		}
 		i++;
 	}
 }
 
-void	iso_proj(t_params *params, t_point start, double alpha, double beta)
+void	iso_proj(t_params *params, t_point start, double angles[2])
 {
 	int		i;
 	int		j;
-	double	rx;
-	double	ry;
-	int		nx;
-	int		ny;
-	int		dx;
-	int		dy;
+	double	r[2];
+	int		d[2];
 
 	i = 0;
 	while (i < params->map_lines)
@@ -82,15 +75,15 @@ void	iso_proj(t_params *params, t_point start, double alpha, double beta)
 		j = 0;
 		while (j < params->map_cols)
 		{
-			dx = params->map_2d[i][j].x - start.x;
-			dy = params->map_2d[i][j].y - start.y;
-			rx = dx * cos(beta) - sin(beta) *  params->map_3d[i][j] * params->map_scale;// / (params->map_cols - 1);
-			ry = -dx * sin(alpha) * sin(beta) + cos(alpha) * dy - sin(alpha) * cos(beta) * params->map_3d[i][j] * params->map_scale;// / (params->map_lines - 1);
-			nx = round(rx) + start.x;
-			ny = round(ry) + start.y;
-			params->map_2d[i][j].x = nx;
-			params->map_2d[i][j].y = ny;
-			j++;
+			d[0] = params->map_2d[i][j].x - start.x;
+			d[1] = params->map_2d[i][j].y - start.y;
+			r[0] = d[0] * cos(angles[1]) - sin(angles[1])
+				* params->map_3d[i][j] * params->map_scale;
+			r[1] = -d[0] * sin(angles[0]) * sin(angles[1])
+				+ cos(angles[0]) * d[1] - sin(angles[0]) * cos(angles[1])
+				* params->map_3d[i][j] * params->map_scale;
+			params->map_2d[i][j].x = round(r[0]) + start.x;
+			params->map_2d[i][j++].y = round(r[1]) + start.y;
 		}
 		i++;
 	}

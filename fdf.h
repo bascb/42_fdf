@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:51:35 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 12:53:16 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 19:32:28 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <mlx.h>
 
 # define ESC_KEY 65307
+# define MAX_WIDTH 1920
+# define MAX_HEIGHT 1080
 
 typedef struct s_point {
 	int		x;
@@ -77,9 +79,9 @@ void			print_map_3d(t_params *params);
 
 void			plain_map(t_params *params, t_point start, int scale);
 
-void			rotate_2d(t_params *params, t_point start, double alpha, double betae);
+void			rotate_2d(t_params *params, t_point start, double angle);
 
-void			iso_proj(t_params *params, t_point start, double alpha, double beta);
+void			iso_proj(t_params *params, t_point start, double angles[2]);
 
 int				create_trgb(unsigned char t, unsigned char r,
 					unsigned char g, unsigned char b);
