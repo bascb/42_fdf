@@ -1,7 +1,7 @@
 NAME = fdf
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-SRC = fdf
+SRC = fdf fdf_window_management fdf_colors fdf_draw fdf_process_map fdf_transform_map fdf_utils
 LIBFT = libft.a
 INCLUDE = -I/usr/include -Imlx_linux -O3
 LIBS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
