@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 19:22:06 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 15:14:10 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:34:40 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	get_map(&params, argv[1]);
 	start.color = create_trgb(0, 255, 255, 0);
 	start.x = 700;
-	start.y = 300;
+	start.y = 3;
 	plain_map(&params, start, params.map_scale);
 	rotate_2d(&params, start, M_PI / 4, M_PI / 4);
 	iso_proj(&params, start, M_PI / 4, 0.03 * M_PI);

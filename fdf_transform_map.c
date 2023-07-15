@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 21:57:31 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/07/15 15:16:02 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:26:10 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	iso_proj(t_params *params, t_point start, double alpha, double beta)
 		{
 			dx = params->map_2d[i][j].x - start.x;
 			dy = params->map_2d[i][j].y - start.y;
-			rx = dx * cos(beta) - sin(beta) *  params->map_3d[i][j] * params->map_scale / (params->map_cols - 1);
-			ry = -dx * sin(alpha) * sin(beta) + cos(alpha) * dy - sin(alpha) * cos(beta) * params->map_3d[i][j] * params->map_scale / (params->map_lines - 1);
+			rx = dx * cos(beta) - sin(beta) *  params->map_3d[i][j] * params->map_scale;// / (params->map_cols - 1);
+			ry = -dx * sin(alpha) * sin(beta) + cos(alpha) * dy - sin(alpha) * cos(beta) * params->map_3d[i][j] * params->map_scale;// / (params->map_lines - 1);
 			nx = round(rx) + start.x;
 			ny = round(ry) + start.y;
 			params->map_2d[i][j].x = nx;
